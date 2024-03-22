@@ -1,0 +1,36 @@
+---
+nodes:
+- address: 192.168.1.109
+  port: "22"
+  internal_address: 192.168.1.109
+  role: [controlplane,worker,etcd] 
+  hostname_override: "labs-k8s-master"
+  user: ubuntu
+- address: 192.168.1.99
+  port: "22"
+  internal_address: 192.168.1.99
+  role:
+  - worker
+  hostname_override: "labs-k8s-worker-01"
+  user: ubuntu
+- address: 192.168.1.115
+  port: "22"
+  internal_address: 192.168.1.115
+  role:
+  - worker
+  hostname_override: "labs-k8s-worker-02"
+  user: ubuntu
+ssh_key_path: ~/.ssh/id_rsa_proxmox
+cluster_name: "rkesmbk8s"
+kubernetes_version: v1.27.11-rancher1-1
+authorization:
+    mode: rbac
+network:
+  plugin: calico
+  options: {}
+  mtu: 0
+  node_selector: {}
+  update_strategy: null
+  tolerations: []
+dns:
+    provider: coredns

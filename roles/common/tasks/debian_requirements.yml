@@ -1,0 +1,72 @@
+---
+- name: Update apt cache.
+  apt: update_cache=yes cache_valid_time=86400
+  become: true
+  tags:
+  - install
+
+- name: Installing Dependencies
+  apt: 
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libfontconfig
+    - libffi-dev
+    - libncurses5-dev
+    - python3-pip
+    - python3-setuptools
+  become: true
+  tags:
+  - install
+
+- name: Installing Qemu and VM Dependencies 
+  apt: 
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - jq 
+    - net-tools 
+    - ntp 
+    - ntpdate 
+    - qemu-guest-agent
+    - ca-certificates 
+    - software-properties-common 
+    - libseccomp2 
+    - apt-transport-https
+  become: true
+  tags:
+  - install
+
+- name: Installing Ubuntu Dependencies
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - curl
+    - gnupg2
+    - git-core
+    - zlib1g-dev 
+    - build-essential 
+    - libssl-dev 
+    - libreadline-dev 
+    - libyaml-dev 
+    - libsqlite3-dev 
+    - sqlite3 
+    - libxml2-dev 
+    - libxslt1-dev 
+    - libcurl4-openssl-dev 
+    - software-properties-common 
+    - libffi-dev 
+    - nodejs 
+    - yarn
+    - libffi-dev
+    - libncurses5-dev
+  become: true
+  tags:
+  - install
+
+- name: Disable UFW
+  ufw:
+    state: disabled
+  tags:
+  - install

@@ -1,0 +1,59 @@
+---
+- name: Disable swap
+  shell: |
+     sudo swapoff -a
+     sudo sed -i '/\/swap/ s/^\(.*\)$/#\1/g' /etc/fstab
+  become: true
+  tags:
+  - install
+
+- name: Create containerd config file
+  file:
+     path: "/etc/modules-load.d/containerd.conf"
+     state: "touch"
+  become: true
+  tags:
+  - install
+
+- name: Add conf for containerd
+  blockinfile:
+     path: "/etc/modules-load.d/containerd.conf"
+     block: |
+         overlay
+         br_netfilter
+  become: true
+  tags:
+  - install
+
+- name: modprobe
+  shell: |
+       sudo modprobe overlay
+       sudo modprobe br_netfilter
+  become: true
+  tags:
+  - install
+
+- name: Set system configurations for Kubernetes networking
+  file:
+      path: "/etc/sysctl.d/99-kubernetes-cri.conf"
+      state: "touch"
+  become: true
+  tags:
+  - install
+
+- name: Add conf for containerd
+  blockinfile:
+    path: "/etc/sysctl.d/99-kubernetes-cri.conf"
+    block: |
+        net.bridge.bridge-nf-call-iptables = 1
+        net.ipv4.ip_forward = 1
+        net.bridge.bridge-nf-call-ip6tables = 1
+  become: true
+  tags:
+  - install
+
+- name: Apply new settings
+  command: sudo sysctl --system
+  become: true
+  tags:
+  - install
