@@ -1,28 +1,28 @@
 ---
 nodes:
-- address: 192.168.1.109
+- address: 192.168.1.132
   port: "22"
-  internal_address: 192.168.1.109
+  internal_address: 192.168.1.132
   role: [controlplane,worker,etcd] 
-  hostname_override: "labs-k8s-master"
+  hostname_override: "smb-k8s-master"
   user: ubuntu
-- address: 192.168.1.99
+- address: 192.168.1.135
   port: "22"
-  internal_address: 192.168.1.99
+  internal_address: 192.168.1.135
   role:
   - worker
-  hostname_override: "labs-k8s-worker-01"
+  hostname_override: "smb-k8s-worker01"
   user: ubuntu
-- address: 192.168.1.115
+- address: 192.168.1.136
   port: "22"
-  internal_address: 192.168.1.115
+  internal_address: 192.168.1.136
   role:
   - worker
-  hostname_override: "labs-k8s-worker-02"
+  hostname_override: "smb-k8s-worker02"
   user: ubuntu
 ssh_key_path: ~/.ssh/id_rsa_proxmox
-cluster_name: "rkesmbk8s"
-kubernetes_version: v1.27.11-rancher1-1
+cluster_name: "smbubuntuk8s"
+kubernetes_version: v1.28.7-rancher1-1
 authorization:
     mode: rbac
 network:
